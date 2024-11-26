@@ -1,55 +1,44 @@
-export const searchGithub = async (query: string) => {
+const searchGithub = async () => {
   try {
-    const token = import.meta.env.VITE_GITHUB_TOKEN;
-
-    if (!token) {
-      throw new Error('GitHub token is undefined. Please check your .env file.');
-    }
-
+    const start = Math.floor(Math.random() * 100000000) + 1;
+    // console.log(import.meta.env);
     const response = await fetch(
-      `https://api.github.com/search/users?q=${query}`,
+      `https://api.github.com/users?since=${start}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
         },
       }
     );
-
+    // console.log('Response:', response);
     const data = await response.json();
     if (!response.ok) {
-      throw new Error('Invalid API response, check the network tab');
+      throw new Error('invalid API response, check the network tab');
     }
-
+    // console.log('Data:', data);
     return data;
   } catch (err) {
-    console.error('An error occurred:', err);
-    return { items: [] };
+    // console.log('an error occurred', err);
+    return [];
   }
 };
 
-export const searchGithubUser = async (username: string) => {
+const searchGithubUser = async (username: string) => {
   try {
-    const token = import.meta.env.VITE_GITHUB_TOKEN;
-    console.log('GitHub Token:', token);
-
-    if (!token) {
-      throw new Error('GitHub token is undefined. Please check your .env file.');
-    }
-
     const response = await fetch(`https://api.github.com/users/${username}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
       },
     });
-
     const data = await response.json();
     if (!response.ok) {
-      throw new Error('Invalid API response, check the network tab');
+      throw new Error('invalid API response, check the network tab');
     }
-
     return data;
   } catch (err) {
-    console.error('An error occurred:', err);
-    return null;
+    // console.log('an error occurred', err);
+    return {};
   }
 };
+
+export { searchGithub, searchGithubUser };
