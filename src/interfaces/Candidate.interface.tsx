@@ -1,12 +1,10 @@
-
 export interface Candidate {
-    id: number;
-    login: string;
-    email: string;
-    html_url: string;
-    name: string;
-    avatar_url: string;
-    bio: string;
-    company: string;
-    location: string;
-  }
+  login: string;
+  name: string;
+  location?: string | null;
+  email: string;
+  company: string;
+  bio: string;
+  avatar_url: string;
+  html_url: string
+}
