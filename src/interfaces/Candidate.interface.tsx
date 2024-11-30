@@ -1,4 +1,5 @@
 export interface Candidate {
+  id: string;
   login: string;
   name: string;
   location?: string | null;

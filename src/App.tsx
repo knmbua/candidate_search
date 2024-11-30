@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Candidate } from './interfaces/Candidate.interface';
 import Nav from './components/Nav';
+import { searchGithub, searchGithubUser } from './api/API';
 
 function App() {
   const [savedCandidates, setSavedCandidates] = useState<Candidate[]>([]);
@@ -18,6 +19,18 @@ function App() {
     // Save candidates to local storage whenever the list changes
     localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates));
   }, [savedCandidates]);
+
+  useEffect(() => {
+    // Call the searchGithub and searchGithubUser functions when the component mounts
+    const fetchData = async () => {
+      const users = await searchGithub();
+      console.log(users);
+
+      const user = await searchGithubUser('octocat');
+      console.log(user);
+    };
+    fetchData();
+  }, []);
 
   const handleSaveCandidate = (candidate: Candidate) => {
     setSavedCandidates([...savedCandidates, candidate]);
